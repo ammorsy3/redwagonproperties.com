@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>San Antonio Property Management | Red Wagon Properties</title>
+  <meta name="description" content="San Antonio's trusted, licensed property management experts. We handle tenant placement, rent collection, maintenance, and finance so you enjoy passive income.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter (body) & Montserrat (headings) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              light: '#C83B3B',
+              DEFAULT: '#A62222',
+              dark: '#7D1616',
+              bg: '#FDF7F7',
+            },
+            neutral: {
+              950: '#111111',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Montserrat', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS for specialized visuals, animations & micro-interactions -->
+  <style>
+    /* 1. Scroll-Triggered Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 2. Glassmorphism Nav Bar on Scroll */
+    #navbar {
+      transition: background-color 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    #navbar.nav-scrolled {
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    /* 3. Hero Visual Upgrades */
+    @keyframes hero-gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero-gradient-overlay {
+      background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(45, 18, 18, 0.75) 50%, rgba(166, 34, 34, 0.4) 100%);
+      background-size: 200% 200%;
+      animation: hero-gradient-shift 10s ease infinite;
+    }
+    @keyframes float-badge {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .float-badge {
+      animation: float-badge 3s ease-in-out infinite;
+    }
+    @keyframes cta-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(166, 34, 34, 0.4); }
+      70% { box-shadow: 0 0 24px 8px rgba(166, 34, 34, 0); }
+    }
+    .cta-pulse-glow {
+      animation: cta-pulse 2s infinite;
+    }
+
+    /* 4. Heading Gradients */
+    .gradient-text-brand {
+      background: linear-gradient(135deg, #A62222 0%, #e04545 50%, #A62222 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-text-hero {
+      background: linear-gradient(135deg, #ffffff 0%, #d1d5db 50%, #ffffff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* 5. Gradient Background Shifts */
+    @keyframes bg-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .bg-gradient-shift {
+      background: linear-gradient(135deg, #A62222 0%, #8a1a1a 50%, #A62222 100%);
+      background-size: 200% 200%;
+      animation: bg-shift 8s ease infinite;
+    }
+
+    /* 6. Card Hovers & Shadows */
+    .shadow-layered {
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04), 0 2px 4px -2px rgba(0,0,0,0.03);
+    }
+    .service-card {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border-top: 3px solid transparent;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-top-color: #A62222;
+      box-shadow: 0 20px 40px -12px rgba(166, 34, 34, 0.2), 0 8px 16px -8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .testimonial-card {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .testimonial-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.08);
+    }
+
+    .service-tag {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .service-tag:hover {
+      background-color: #A62222;
+      color: #ffffff;
+      border-color: #A62222;
+      transform: scale(1.06);
+    }
+
+    /* 7. Button Shine & Tactile Effects */
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-shine::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 120%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: skewX(-20deg);
+      transition: none;
+    }
+    .btn-shine:hover::after {
+      left: 150%;
+      transition: left 0.6s ease-in-out;
+    }
+    .btn-shine:hover {
+      transform: scale(1.03);
+    }
+    .btn-shine:active {
+      transform: scale(0.98);
+    }
+
+    /* 8. FAQ Transitions */
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease-in-out;
+      opacity: 0;
+    }
+    .faq-item.active .faq-content {
+      opacity: 1;
+    }
+    .faq-chevron {
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .faq-item.active .faq-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* 9. Mobile Floating Button pulsing */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(166, 34, 34, 0.5); }
+      70% { transform: scale(1); box-shadow: 0 0 0 16px rgba(166, 34, 34, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(166, 34, 34, 0); }
+    }
+    .mobile-floating-glow {
+      animation: pulse-ring 2s infinite;
+    }
+
+    /* 10. Multi-step Form Wizard */
+    .form-step {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* 11. Custom Branded Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111111;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #A62222, #e04545);
+      border-radius: 5px;
+      border: 2px solid #111111;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #e04545;
+    }
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #A62222 #111111;
+    }
+
+    /* 12. Respect Prefers Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+      }
+      .reveal, .reveal-item {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .btn-shine::after {
+        display: none !important;
+      }
+    }
+  </style>
+
+  <!-- Local Business Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Red Wagon Properties",
+      "image": "images/hero_neighborhood.jpg",
+      "telephone": "+1-210-695-1100",
+      "email": "redwagonproperties@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "16719 Huebner Road #201",
+        "addressLocality": "San Antonio",
+        "addressRegion": "TX",
+        "postalCode": "78248",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 29.600685,
+        "longitude": -98.539829
+      },
+      "url": "https://redwagonproperties.com",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday"
+          ],
+          "opens": "09:00",
+          "closes": "17:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Friday",
+          "opens": "09:00",
+          "closes": "15:00"
+        }
+      ],
+      "priceRange": "$$"
+    }
+  </script>
+</head>
+<body class="font-sans text-neutral-800 bg-white antialiased">
+
+  <!-- Scroll Progress Bar (Top) -->
+  <div id="scroll-progress" class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-brand to-[#e04545] z-[9999]" style="width: 0%"></div>
+
+  <!-- 1. STICKY NAV BAR -->
+  <header id="navbar" class="fixed top-0 left-0 w-full z-50 bg-white border-b border-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="#" class="flex items-center space-x-3 group">
+          <div class="bg-brand text-white p-2 rounded-lg transition-transform duration-300 group-hover:scale-105">
+            <!-- Red Wagon SVG Icon -->
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 8h15v6H3V8z" stroke-linejoin="round" />
+              <path d="M18 11h4l-1-4" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="6" cy="17" r="2.5" />
+              <circle cx="15" cy="17" r="2.5" />
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-heading font-extrabold text-lg sm:text-xl tracking-tight text-neutral-900 leading-none">RED WAGON</span>
+            <span class="font-heading font-medium text-xs tracking-widest text-brand uppercase leading-none mt-1">Properties</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#services" class="text-sm font-semibold text-neutral-600 hover:text-brand transition-colors duration-200">Services</a>
+          <a href="#how-it-works" class="text-sm font-semibold text-neutral-600 hover:text-brand transition-colors duration-200">How It Works</a>
+          <a href="#reviews" class="text-sm font-semibold text-neutral-600 hover:text-brand transition-colors duration-200">Reviews</a>
+          <a href="#faq" class="text-sm font-semibold text-neutral-600 hover:text-brand transition-colors duration-200">FAQ</a>
+          <a href="#service-areas" class="text-sm font-semibold text-neutral-600 hover:text-brand transition-colors duration-200">Service Areas</a>
+        </nav>
+
+        <!-- Desktop CTA -->
+        <div class="hidden md:block">
+          <a href="tel:+12106951100" class="btn-shine inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-bold rounded-lg text-white bg-brand hover:bg-brand-light hover:shadow-lg hover:shadow-brand/20 active:scale-95 transition-all duration-200">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            Free Consultation
+          </a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-btn" type="button" class="text-neutral-600 hover:text-brand focus:outline-none p-2 rounded-lg" aria-label="Toggle menu">
+            <svg class="h-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path id="hamburger-icon" class="block" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+              <path id="close-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-100 shadow-lg px-4 pt-2 pb-6 space-y-3">
+      <a href="#services" class="block py-2 px-3 text-base font-semibold text-neutral-600 hover:bg-brand-bg hover:text-brand rounded-lg transition-colors">Services</a>
+      <a href="#how-it-works" class="block py-2 px-3 text-base font-semibold text-neutral-600 hover:bg-brand-bg hover:text-brand rounded-lg transition-colors">How It Works</a>
+      <a href="#reviews" class="block py-2 px-3 text-base font-semibold text-neutral-600 hover:bg-brand-bg hover:text-brand rounded-lg transition-colors">Reviews</a>
+      <a href="#faq" class="block py-2 px-3 text-base font-semibold text-neutral-600 hover:bg-brand-bg hover:text-brand rounded-lg transition-colors">FAQ</a>
+      <a href="#service-areas" class="block py-2 px-3 text-base font-semibold text-neutral-600 hover:bg-brand-bg hover:text-brand rounded-lg transition-colors">Service Areas</a>
+      <div class="pt-4 px-3">
+        <a href="tel:+12106951100" class="flex w-full items-center justify-center py-3 px-4 rounded-lg text-white bg-brand font-bold shadow-lg shadow-brand/20">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+          Call (210) 695-1100
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. HERO SECTION -->
+  <section class="relative h-screen flex items-center justify-center overflow-hidden pt-20">
+    <!-- Background Image with Animated Overlay -->
+    <div class="absolute inset-0 z-0">
+      <img src="images/hero_neighborhood.jpg" alt="San Antonio Neighborhood" class="w-full h-full object-cover">
+      <div class="absolute inset-0 hero-gradient-overlay"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white flex flex-col items-center">
+      <span class="float-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand/35 border border-brand text-red-200 mb-6 uppercase tracking-wider">
+        <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span> Licensed Texas Real Estate Brokerage
+      </span>
+      
+      <h1 class="gradient-text-hero font-heading font-extrabold text-4xl sm:text-5xl md:text-6xl tracking-tight leading-tight max-w-4xl">
+        San Antonio's Trusted <br class="hidden sm:inline">Property Management Experts
+      </h1>
+      
+      <p class="mt-6 text-lg sm:text-xl text-gray-200 max-w-3xl leading-relaxed font-light">
+        Stop chasing late rent and tenant complaints. We handle everything — tenant placement, maintenance, rent collection, and financial reporting — so you enjoy passive income without the headaches.
+      </p>
+
+      <!-- CTAs -->
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+        <a href="#contact-form" class="btn-shine cta-pulse-glow inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-lg text-white bg-brand hover:bg-brand-light hover:shadow-lg hover:shadow-brand/35 transition-all">
+          Get Your Free Rental Analysis
+        </a>
+        <a href="tel:+12106951100" class="btn-shine inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-lg text-white border-2 border-white/80 hover:bg-white hover:text-neutral-900 transition-all">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+          Call (210) 695-1100
+        </a>
+      </div>
+
+      <!-- Trust Line -->
+      <p class="mt-8 text-sm text-gray-300 tracking-wide font-medium">
+        Licensed Real Estate Agents • Serving San Antonio & Surrounding Areas
+      </p>
+    </div>
+  </section>
+
+  <!-- 3. TRUST BAR -->
+  <section class="bg-gradient-shift py-6 text-white relative z-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 text-center divide-x-0 md:divide-x divide-white/20">
+        
+        <!-- Trust Item 1 -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 px-2">
+          <div class="bg-white/10 p-2 rounded-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <span class="text-sm sm:text-base font-semibold tracking-wide text-white">Licensed & Insured</span>
+        </div>
+
+        <!-- Trust Item 2 -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 px-2">
+          <div class="bg-white/10 p-2 rounded-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <span class="text-sm sm:text-base font-semibold tracking-wide text-white">Local San Antonio Experts</span>
+        </div>
+
+        <!-- Trust Item 3 -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 px-2">
+          <div class="bg-white/10 p-2 rounded-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <span class="text-sm sm:text-base font-semibold tracking-wide text-white">Transparent Pricing</span>
+        </div>
+
+        <!-- Trust Item 4 -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 px-2">
+          <div class="bg-white/10 p-2 rounded-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <span class="text-sm sm:text-base font-semibold tracking-wide text-white">24/7 Emergency Maintenance</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. SERVICES SECTION -->
+  <section id="services" class="py-24 bg-white scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <h2 class="gradient-text-brand font-heading font-extrabold text-3xl sm:text-4xl tracking-tight">
+          What We Handle For You
+        </h2>
+        <div class="w-16 h-1 bg-brand mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 text-lg text-neutral-600">
+          Full-service property management from lease-up to move-out.
+        </p>
+      </div>
+
+      <!-- Services Grid (Staggered Entrance) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal-container">
+        
+        <!-- Card 1 -->
+        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+          <div>
+            <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-neutral-900 mb-3">Tenant Placement & Leasing</h3>
+            <p class="text-neutral-600 text-sm leading-relaxed">
+              We market your property, screen tenants, and place qualified renters fast. No long vacancies.
+            </p>
+          </div>
+          <a href="#contact-form" class="mt-6 border-t border-gray-50 pt-4 flex items-center text-xs font-bold text-brand group-hover:text-brand-dark transition-colors">
+            Learn More
+            <svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+          <div>
+            <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-neutral-900 mb-3">Rent Collection & Financial Reporting</h3>
+            <p class="text-neutral-600 text-sm leading-relaxed">
+              On-time rent collection with monthly statements and transparent reporting. Always know where your money is.
+            </p>
+          </div>
+          <a href="#contact-form" class="mt-6 border-t border-gray-50 pt-4 flex items-center text-xs font-bold text-brand group-hover:text-brand-dark transition-colors">
+            Learn More
+            <svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+          <div>
+            <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-neutral-900 mb-3">Property Maintenance & Repairs</h3>
+            <p class="text-neutral-600 text-sm leading-relaxed">
+              24/7 emergency maintenance with our network of trusted, vetted contractors. We handle it all.
+            </p>
+          </div>
+          <a href="#contact-form" class="mt-6 border-t border-gray-50 pt-4 flex items-center text-xs font-bold text-brand group-hover:text-brand-dark transition-colors">
+            Learn More
+            <svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+          <div>
+            <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-neutral-900 mb-3">Tenant Screening & Retention</h3>
+            <p class="text-neutral-600 text-sm leading-relaxed">
+              Rigorous background, credit, and eviction checks. We place quality tenants who stay long-term.
+            </p>
+          </div>
+          <a href="#contact-form" class="mt-6 border-t border-gray-50 pt-4 flex items-center text-xs font-bold text-brand group-hover:text-brand-dark transition-colors">
+            Learn More
+            <svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+          <div>
+            <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-neutral-900 mb-3">Free Home Valuation</h3>
+            <p class="text-neutral-600 text-sm leading-relaxed">
+              Curious what your property is worth? Get a free, no-obligation rental analysis from our local experts.
+            </p>
+          </div>
+          <a href="#contact-form" class="mt-6 border-t border-gray-50 pt-4 flex items-center text-xs font-bold text-brand group-hover:text-brand-dark transition-colors">
+            Get Analysis
+            <svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+          <div>
+            <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
+            <h3 class="font-heading font-bold text-xl text-neutral-900 mb-3">Investment Property Consulting</h3>
+            <p class="text-neutral-600 text-sm leading-relaxed">
+              Thinking about expanding your portfolio? We'll help you find and analyze your next investment.
+            </p>
+          </div>
+          <a href="#contact-form" class="mt-6 border-t border-gray-50 pt-4 flex items-center text-xs font-bold text-brand group-hover:text-brand-dark transition-colors">
+            Learn More
+            <svg class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave Divider: Services (white) to How It Works (light gray) -->
+  <div class="relative w-full overflow-hidden leading-none z-10 -mt-1 bg-white">
+    <svg viewBox="0 0 1200 120" class="w-full h-12 text-neutral-50 fill-current" preserveAspectRatio="none">
+      <path d="M0,0 C150,90 350,120 600,100 C850,80 1050,110 1200,90 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- 5. HOW IT WORKS SECTION -->
+  <section id="how-it-works" class="py-24 bg-neutral-50 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+        <h2 class="gradient-text-brand font-heading font-extrabold text-3xl sm:text-4xl tracking-tight">
+          How It Works
+        </h2>
+        <div class="w-16 h-1 bg-brand mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 text-lg text-neutral-600">
+          We handle the heavy lifting while you enjoy simple, hands-free property management.
+        </p>
+      </div>
+
+      <!-- Process Steps (Timeline Style) -->
+      <div class="relative">
+        <!-- Connecting line on desktop -->
+        <div class="hidden lg:block absolute top-1/2 left-12 right-12 h-0.5 bg-neutral-200 -translate-y-12 z-0"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative z-10 reveal-container">
+          
+          <!-- Step 1 -->
+          <div class="flex flex-col items-center text-center group reveal-item">
+            <div class="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-heading font-extrabold text-2xl shadow-lg shadow-brand/20 group-hover:scale-110 transition-transform duration-300 mb-6">
+              1
+            </div>
+            <h3 class="font-heading font-bold text-lg text-neutral-900 mb-3">Free Consultation</h3>
+            <p class="text-neutral-600 text-sm leading-relaxed max-w-xs">
+              We assess your property and goals. Call <a href="tel:+12106951100" class="text-brand font-bold hover:underline">(210) 695-1100</a> or request your free analysis.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="flex flex-col items-center text-center group reveal-item">
+            <div class="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-heading font-extrabold text-2xl shadow-lg shadow-brand/20 group-hover:scale-110 transition-transform duration-300 mb-6">
+              2
+            </div>
+            <h3 class="font-heading font-bold text-lg text-neutral-900 mb-3">We Take Over Management</h3>
+            <p class="text-neutral-600 text-sm leading-relaxed max-w-xs">
+              From marketing to tenant placement to day-to-day operations, we handle everything.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flex flex-col items-center text-center group reveal-item">
+            <div class="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-heading font-extrabold text-2xl shadow-lg shadow-brand/20 group-hover:scale-110 transition-transform duration-300 mb-6">
+              3
+            </div>
+            <h3 class="font-heading font-bold text-lg text-neutral-900 mb-3">We Maximize Your Income</h3>
+            <p class="text-neutral-600 text-sm leading-relaxed max-w-xs">
+              Competitive rent pricing, low vacancy, and cost-effective maintenance keep more money in your pocket.
+            </p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="flex flex-col items-center text-center group reveal-item">
+            <div class="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center font-heading font-extrabold text-2xl shadow-lg shadow-brand/20 group-hover:scale-110 transition-transform duration-300 mb-6">
+              4
+            </div>
+            <h3 class="font-heading font-bold text-lg text-neutral-900 mb-3">You Stay Informed</h3>
+            <p class="text-neutral-600 text-sm leading-relaxed max-w-xs">
+              Monthly statements, real-time updates, and direct access to your property manager. No black box.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave Divider: How It Works (light gray) to Stats (brand color) -->
+  <div class="relative w-full overflow-hidden leading-none z-10 -mt-1 bg-neutral-50">
+    <svg viewBox="0 0 1200 120" class="w-full h-12 text-brand fill-current" preserveAspectRatio="none">
+      <path d="M0,100 C150,60 350,30 600,60 C850,90 1050,60 1200,20 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- 6. STATS BAR (With Circular Progress Ring & Counting) -->
+  <section id="stats-section" class="bg-gradient-shift py-16 text-white relative z-20">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08),transparent)] z-0"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center reveal-container">
+        
+        <!-- Stat 1 -->
+        <div class="stat-item relative flex flex-col items-center text-center gap-4 p-6 rounded-2xl group transition-all duration-300 bg-white/5 border border-white/10 hover:bg-white/10 reveal-item">
+          <!-- Circular Progress Ring with Icon -->
+          <div class="relative w-24 h-24">
+            <svg class="w-24 h-24 transform -rotate-90">
+              <circle cx="48" cy="48" r="42" stroke="rgba(255, 255, 255, 0.15)" stroke-width="4" fill="none" />
+              <circle cx="48" cy="48" r="42" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" class="stat-progress-ring transition-all duration-1000 ease-out" />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center text-white scale-110" style="filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));">
+              <!-- Upward trend chart icon -->
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div class="font-heading font-black text-4xl sm:text-5xl text-white tracking-tight">
+              <span class="stat-counter" data-target="98" data-suffix="%">0</span>
+            </div>
+            <div class="mt-2 text-xs font-semibold uppercase tracking-wider text-red-200">On-Time Rent Collection</div>
+          </div>
+        </div>
+
+        <!-- Stat 2 -->
+        <div class="stat-item relative flex flex-col items-center text-center gap-4 p-6 rounded-2xl group transition-all duration-300 bg-white/5 border border-white/10 hover:bg-white/10 reveal-item">
+          <!-- Circular Progress Ring with Icon -->
+          <div class="relative w-24 h-24">
+            <svg class="w-24 h-24 transform -rotate-90">
+              <circle cx="48" cy="48" r="42" stroke="rgba(255, 255, 255, 0.15)" stroke-width="4" fill="none" />
+              <circle cx="48" cy="48" r="42" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" class="stat-progress-ring transition-all duration-1000 ease-out" />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center text-white scale-110" style="filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));">
+              <!-- Map pin icon -->
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div class="font-heading font-black text-4xl sm:text-5xl text-white tracking-tight">
+              <span class="stat-counter" data-target="16" data-suffix="+">0</span>
+            </div>
+            <div class="mt-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-red-200">Neighborhoods Served</div>
+          </div>
+        </div>
+
+        <!-- Stat 3 -->
+        <div class="stat-item relative flex flex-col items-center text-center gap-4 p-6 rounded-2xl group transition-all duration-300 bg-white/5 border border-white/10 hover:bg-white/10 reveal-item">
+          <!-- Circular Progress Ring with Icon -->
+          <div class="relative w-24 h-24">
+            <svg class="w-24 h-24 transform -rotate-90">
+              <circle cx="48" cy="48" r="42" stroke="rgba(255, 255, 255, 0.15)" stroke-width="4" fill="none" />
+              <circle cx="48" cy="48" r="42" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" class="stat-progress-ring transition-all duration-1000 ease-out" />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center text-white scale-110" style="filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));">
+              <!-- Maintenance clock icon -->
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div class="font-heading font-black text-4xl sm:text-5xl text-white tracking-tight">
+              <span class="stat-counter" data-target="24" data-suffix="/7">0</span>
+            </div>
+            <div class="mt-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-red-200">Maintenance Support</div>
+          </div>
+        </div>
+
+        <!-- Stat 4 -->
+        <div class="stat-item relative flex flex-col items-center text-center gap-4 p-6 rounded-2xl group transition-all duration-300 bg-white/5 border border-white/10 hover:bg-white/10 reveal-item">
+          <!-- Circular Progress Ring with Icon -->
+          <div class="relative w-24 h-24">
+            <svg class="w-24 h-24 transform -rotate-90">
+              <circle cx="48" cy="48" r="42" stroke="rgba(255, 255, 255, 0.15)" stroke-width="4" fill="none" />
+              <circle cx="48" cy="48" r="42" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" class="stat-progress-ring transition-all duration-1000 ease-out" />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center text-white scale-110" style="filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));">
+              <!-- Shield icon -->
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div class="font-heading font-black text-4xl sm:text-5xl text-white tracking-tight">
+              <span class="stat-counter" data-target="100" data-suffix="%">0</span>
+            </div>
+            <div class="mt-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-red-200">Licensed Brokerage</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. WHY CHOOSE US SECTION -->
+  <section class="py-24 bg-white scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        
+        <!-- Left Column (Text benefits) -->
+        <div class="space-y-8 reveal">
+          <h2 class="gradient-text-brand font-heading font-extrabold text-3xl sm:text-4xl tracking-tight">
+            Why San Antonio Owners Choose Red Wagon
+          </h2>
+          <div class="w-16 h-1 bg-brand rounded-full"></div>
+          
+          <div class="space-y-6">
+            
+            <!-- Benefit 1 -->
+            <div class="flex items-start gap-4">
+              <div class="mt-1 bg-brand/10 text-brand p-1.5 rounded-full shrink-0">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-neutral-900 text-lg">Licensed Real Estate Agents</h4>
+                <p class="text-neutral-600 text-sm mt-1">
+                  We're licensed real estate agents, not just property managers — that means deeper market knowledge, absolute regulatory compliance, and better investment results.
+                </p>
+              </div>
+            </div>
+
+            <!-- Benefit 2 -->
+            <div class="flex items-start gap-4">
+              <div class="mt-1 bg-brand/10 text-brand p-1.5 rounded-full shrink-0">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-neutral-900 text-lg">Dedicated Property Managers</h4>
+                <p class="text-neutral-600 text-sm mt-1">
+                  You get a dedicated property manager who actually knows your property and tenants, not a rotating 1-800 support queue.
+                </p>
+              </div>
+            </div>
+
+            <!-- Benefit 3 -->
+            <div class="flex items-start gap-4">
+              <div class="mt-1 bg-brand/10 text-brand p-1.5 rounded-full shrink-0">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-neutral-900 text-lg">Transparent Flat-Rate Pricing</h4>
+                <p class="text-neutral-600 text-sm mt-1">
+                  No hidden fees, no lease renewal surprises, and no upfront startup costs. You only pay when we perform.
+                </p>
+              </div>
+            </div>
+
+            <!-- Benefit 4 -->
+            <div class="flex items-start gap-4">
+              <div class="mt-1 bg-brand/10 text-brand p-1.5 rounded-full shrink-0">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-neutral-900 text-lg">Deep Local Expertise</h4>
+                <p class="text-neutral-600 text-sm mt-1">
+                  We are a local San Antonio team. We live and work in the community, so we know the local regulations, neighborhoods, and market conditions inside out.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Column (Image representation) -->
+        <div class="relative reveal">
+          <div class="absolute -inset-4 bg-brand/5 rounded-2xl -rotate-2 scale-98 z-0"></div>
+          <img src="images/agent_homeowner.jpg" alt="Real estate agent shaking hands with homeowner" class="relative z-10 rounded-2xl shadow-xl border border-gray-100 object-cover w-full h-[450px]">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave Divider: Why Choose Us (white) to Testimonials (light gray) -->
+  <div class="relative w-full overflow-hidden leading-none z-10 -mt-1 bg-white">
+    <svg viewBox="0 0 1200 120" class="w-full h-12 text-neutral-50 fill-current" preserveAspectRatio="none">
+      <path d="M0,50 C200,10 400,90 600,50 C800,10 1000,90 1200,50 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- 8. TESTIMONIALS SECTION -->
+  <section id="reviews" class="py-24 bg-neutral-50 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <h2 class="gradient-text-brand font-heading font-extrabold text-3xl sm:text-4xl tracking-tight">
+          What Our Property Owners Say
+        </h2>
+        <div class="w-16 h-1 bg-brand mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 text-lg text-neutral-600">
+          Read real reviews from landlords and property investors in the Greater San Antonio area.
+        </p>
+      </div>
+
+      <!-- Testimonials Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal-container">
+        
+        <!-- Review 1 -->
+        <div class="testimonial-card bg-white border border-gray-100 rounded-xl p-8 shadow-sm flex flex-col justify-between reveal-item">
+          <div>
+            <!-- Star Ratings -->
+            <div class="flex text-yellow-400 mb-6">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <p class="text-neutral-700 italic text-sm leading-relaxed mb-6">
+              "Red Wagon took over my property after a nightmare tenant situation. Within two weeks they had a new qualified tenant placed and I've had zero issues since. Worth every penny."
+            </p>
+          </div>
+          <div>
+            <div class="h-px bg-gray-100 my-4"></div>
+            <h5 class="font-heading font-bold text-neutral-900 text-sm">Maria Gonzalez</h5>
+            <p class="text-xs text-brand font-semibold mt-0.5">Property Owner, Stone Oak</p>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="testimonial-card bg-white border border-gray-100 rounded-xl p-8 shadow-sm flex flex-col justify-between reveal-item">
+          <div>
+            <!-- Star Ratings -->
+            <div class="flex text-yellow-400 mb-6">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <p class="text-neutral-700 italic text-sm leading-relaxed mb-6">
+              "I live out of state and was nervous about renting my San Antonio home. The team handles everything — maintenance, rent, communication. I just check my monthly statement and relax."
+            </p>
+          </div>
+          <div>
+            <div class="h-px bg-gray-100 my-4"></div>
+            <h5 class="font-heading font-bold text-neutral-900 text-sm">James Carter</h5>
+            <p class="text-xs text-brand font-semibold mt-0.5">Out-of-State Investor, Boerne</p>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="testimonial-card bg-white border border-gray-100 rounded-xl p-8 shadow-sm flex flex-col justify-between reveal-item">
+          <div>
+            <!-- Star Ratings -->
+            <div class="flex text-yellow-400 mb-6">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <p class="text-neutral-700 italic text-sm leading-relaxed mb-6">
+              "Transparent pricing, no games, and they actually pick up the phone. They've been managing my three properties for over a year now and I wouldn't switch to anyone else."
+            </p>
+          </div>
+          <div>
+            <div class="h-px bg-gray-100 my-4"></div>
+            <h5 class="font-heading font-bold text-neutral-900 text-sm">Patricia Rodriguez</h5>
+            <p class="text-xs text-brand font-semibold mt-0.5">Multi-Property Owner, Alamo Heights</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave Divider: Testimonials (light gray) to Service Areas (white) -->
+  <div class="relative w-full overflow-hidden leading-none z-10 -mt-1 bg-neutral-50">
+    <svg viewBox="0 0 1200 120" class="w-full h-12 text-white fill-current" preserveAspectRatio="none">
+      <path d="M0,30 C300,90 600,30 900,90 C1050,60 1150,45 1200,30 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- 9. SERVICE AREAS SECTION -->
+  <section id="service-areas" class="py-24 bg-white scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <h2 class="gradient-text-brand font-heading font-extrabold text-3xl sm:text-4xl tracking-tight">
+          Areas We Serve
+        </h2>
+        <div class="w-16 h-1 bg-brand mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 text-lg text-neutral-600">
+          Proudly managing properties across San Antonio and surrounding communities.
+        </p>
+      </div>
+
+      <!-- Main Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Side: Interactive Area Tags -->
+        <div class="lg:col-span-7 space-y-6 reveal">
+          <p class="text-neutral-600 text-sm font-semibold mb-2">We offer complete coverage in the following areas:</p>
+          <div class="flex flex-wrap gap-2.5 reveal-container">
+            <!-- Area Tags -->
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">San Antonio</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Alamo Heights</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Stone Oak</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Boerne</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Cibolo</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Schertz</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Leon Valley</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Castle Hills</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Olmos Park</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Hollywood Park</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Shavano</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Converse</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Leon Springs</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Hill Country Village</span>
+            <span class="service-tag inline-block px-4 py-2 border border-brand/20 text-neutral-800 text-xs sm:text-sm font-semibold rounded-full cursor-default reveal-item">Grey Forest</span>
+          </div>
+          <div class="bg-brand-bg p-5 rounded-lg border border-brand/10 mt-6">
+            <h4 class="font-heading font-bold text-brand text-sm mb-1">Don't see your neighborhood listed?</h4>
+            <p class="text-neutral-600 text-xs leading-relaxed">
+              We manage properties throughout Bexar, Comal, and Guadalupe counties. Give us a call at <a href="tel:+12106951100" class="text-brand font-bold hover:underline">(210) 695-1100</a> to verify if we serve your specific location.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Side: Minimalist Map Illustration -->
+        <div class="lg:col-span-5 relative reveal">
+          <div class="absolute -inset-4 bg-brand/5 rounded-2xl rotate-1 scale-98 z-0"></div>
+          <img src="images/san_antonio_map.jpg" alt="San Antonio Service Area Map" class="relative z-10 rounded-2xl shadow-lg border border-gray-100 object-cover w-full h-[400px]">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave Divider: Service Areas (white) to FAQ (light gray) -->
+  <div class="relative w-full overflow-hidden leading-none z-10 -mt-1 bg-white">
+    <svg viewBox="0 0 1200 120" class="w-full h-12 text-neutral-50 fill-current" preserveAspectRatio="none">
+      <path d="M0,80 C250,20 450,110 700,60 C950,10 1100,50 1200,80 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- 10. FAQ SECTION -->
+  <section id="faq" class="py-24 bg-neutral-50 scroll-mt-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <h2 class="gradient-text-brand font-heading font-extrabold text-3xl sm:text-4xl tracking-tight">
+          Frequently Asked Questions
+        </h2>
+        <div class="w-16 h-1 bg-brand mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 text-lg text-neutral-600">
+          Have questions? We have clear, transparent answers.
+        </p>
+      </div>
+
+      <!-- FAQ Accordions -->
+      <div class="space-y-4 reveal-container">
+        
+        <!-- FAQ Item 1 (Active by default) -->
+        <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden active transition-all duration-300 shadow-sm hover:shadow reveal-item">
+          <button type="button" class="faq-toggle flex justify-between items-center w-full px-6 py-5 text-left text-neutral-900 hover:text-brand transition-colors focus:outline-none">
+            <span class="font-heading font-bold text-sm sm:text-base">How much does property management cost?</span>
+            <span class="faq-chevron ml-4 shrink-0 text-brand transform rotate-180">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </button>
+          <div class="faq-content" style="max-height: 200px; opacity: 1;">
+            <div class="px-6 pb-6 text-sm text-neutral-600 leading-relaxed">
+              We offer transparent flat-rate pricing with no hidden fees. Call <a href="tel:+12106951100" class="text-brand font-semibold hover:underline">(210) 695-1100</a> for a free quote tailored to your property.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 shadow-sm hover:shadow reveal-item">
+          <button type="button" class="faq-toggle flex justify-between items-center w-full px-6 py-5 text-left text-neutral-900 hover:text-brand transition-colors focus:outline-none">
+            <span class="font-heading font-bold text-sm sm:text-base">How do I get a quote?</span>
+            <span class="faq-chevron ml-4 shrink-0 text-neutral-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </button>
+          <div class="faq-content">
+            <div class="px-6 pb-6 text-sm text-neutral-600 leading-relaxed">
+              Simple — call us at <a href="tel:+12106951100" class="text-brand font-semibold hover:underline">(210) 695-1100</a> or request your free rental analysis. We'll assess your property and provide a management quote within 24 hours.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 shadow-sm hover:shadow reveal-item">
+          <button type="button" class="faq-toggle flex justify-between items-center w-full px-6 py-5 text-left text-neutral-900 hover:text-brand transition-colors focus:outline-none">
+            <span class="font-heading font-bold text-sm sm:text-base">How long does it take to find a tenant?</span>
+            <span class="faq-chevron ml-4 shrink-0 text-neutral-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </button>
+          <div class="faq-content">
+            <div class="px-6 pb-6 text-sm text-neutral-600 leading-relaxed">
+              Typically 2–3 weeks from listing to lease signing, depending on the property and market conditions. We price competitively to minimize vacancy.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 shadow-sm hover:shadow reveal-item">
+          <button type="button" class="faq-toggle flex justify-between items-center w-full px-6 py-5 text-left text-neutral-900 hover:text-brand transition-colors focus:outline-none">
+            <span class="font-heading font-bold text-sm sm:text-base">What happens if a tenant doesn't pay rent?</span>
+            <span class="faq-chevron ml-4 shrink-0 text-neutral-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </button>
+          <div class="faq-content">
+            <div class="px-6 pb-6 text-sm text-neutral-600 leading-relaxed">
+              We handle the entire process — from late notices to eviction if necessary. Our rigorous screening process keeps this rare, but we protect your investment either way.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 5 -->
+        <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 shadow-sm hover:shadow reveal-item">
+          <button type="button" class="faq-toggle flex justify-between items-center w-full px-6 py-5 text-left text-neutral-900 hover:text-brand transition-colors focus:outline-none">
+            <span class="font-heading font-bold text-sm sm:text-base">Do I still have control over my property?</span>
+            <span class="faq-chevron ml-4 shrink-0 text-neutral-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </button>
+          <div class="faq-content">
+            <div class="px-6 pb-6 text-sm text-neutral-600 leading-relaxed">
+              Absolutely. You set the parameters — rent price, pet policy, maintenance budget thresholds. We handle the day-to-day but you make the big decisions.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 6 -->
+        <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 shadow-sm hover:shadow reveal-item">
+          <button type="button" class="faq-toggle flex justify-between items-center w-full px-6 py-5 text-left text-neutral-900 hover:text-brand transition-colors focus:outline-none">
+            <span class="font-heading font-bold text-sm sm:text-base">What areas do you serve?</span>
+            <span class="faq-chevron ml-4 shrink-0 text-neutral-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </button>
+          <div class="faq-content">
+            <div class="px-6 pb-6 text-sm text-neutral-600 leading-relaxed">
+              We manage properties across San Antonio and surrounding areas including Stone Oak, Alamo Heights, Boerne, Cibolo, Schertz, Leon Valley, Castle Hills, and more.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave Divider: FAQ (light gray) to CTA (brand color) -->
+  <div class="relative w-full overflow-hidden leading-none z-10 -mt-1 bg-neutral-50">
+    <svg viewBox="0 0 1200 120" class="w-full h-12 text-brand fill-current" preserveAspectRatio="none">
+      <path d="M0,40 C300,90 600,10 900,70 C1050,40 1150,55 1200,40 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- 11. CTA SECTION -->
+  <section class="bg-gradient-shift py-20 text-white relative overflow-hidden">
+    <!-- Overlay design elements -->
+    <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-white/5 border border-white/10 z-0"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-white/5 border border-white/10 z-0"></div>
+    
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 flex flex-col items-center">
+      <h2 class="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight">
+        Ready to Stop Managing Your Property Yourself?
+      </h2>
+      <p class="mt-6 text-base sm:text-lg text-red-100 max-w-2xl leading-relaxed">
+        Get a free, no-obligation rental analysis today. Find out what your property could earn with professional management.
+      </p>
+
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+        <a href="tel:+12106951100" class="btn-shine inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-lg text-brand bg-white hover:bg-neutral-50 hover:shadow-lg transition-all">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+          Call (210) 695-1100
+        </a>
+        <a href="#contact-form" class="btn-shine inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-lg text-white border-2 border-white/80 hover:bg-white hover:text-brand transition-all">
+          Get Free Analysis
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave Divider: CTA (brand color) to Contact Form (white) -->
+  <div class="relative w-full overflow-hidden leading-none z-10 -mt-1 bg-brand">
+    <svg viewBox="0 0 1200 120" class="w-full h-12 text-white fill-current" preserveAspectRatio="none">
+      <path d="M0,20 C300,80 600,10 900,90 L1200,20 L1200,120 L0,120 Z"></path>
+    </svg>
+  </div>
+
+  <!-- 12. CONTACT / CONSULTATION FORM SECTION (Multi-Step Form) -->
+  <section id="contact-form" class="py-24 bg-white scroll-mt-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+        <h2 class="gradient-text-brand font-heading font-extrabold text-3xl sm:text-4xl tracking-tight">
+          Get Your Free Rental Analysis
+        </h2>
+        <div class="w-16 h-1 bg-brand mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 text-neutral-600">
+          Find out how much rent you should be collecting. No obligation, 100% free.
+        </p>
+      </div>
+
+      <!-- Form Container -->
+      <div class="bg-white border border-gray-100 rounded-2xl shadow-xl p-8 sm:p-12 reveal">
+        
+        <!-- Multi-step Progress Bar -->
+        <div id="progress-container" class="mb-8">
+          <div class="flex justify-between items-center text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">
+            <span id="form-step-label">Step 1 of 3</span>
+            <span id="form-step-percent">33% Complete</span>
+          </div>
+          <div class="w-full h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+            <div id="form-progress-bar" class="h-full bg-brand rounded-full transition-all duration-300" style="width: 33%"></div>
+          </div>
+        </div>
+
+        <!-- Multi-Step Form -->
+        <form id="multi-step-form" class="relative overflow-hidden min-h-[380px] flex flex-col justify-between">
+          
+          <!-- STEP 1: Property Type -->
+          <div id="step-1" class="form-step space-y-6">
+            <h3 class="font-heading font-bold text-neutral-900 text-lg mb-4 text-center sm:text-left">What type of property do you own?</h3>
+            <div class="grid grid-cols-2 gap-4">
+              
+              <label class="border-2 border-gray-200 rounded-xl p-5 flex flex-col items-center justify-center text-center cursor-pointer hover:border-brand/40 hover:bg-neutral-50 transition-all duration-200 relative group">
+                <input type="radio" name="property_type" value="Single Family" class="sr-only" required>
+                <div class="text-brand text-3xl mb-3 group-hover:scale-110 transition-transform">🏡</div>
+                <span class="text-xs sm:text-sm font-bold text-neutral-800">Single Family</span>
+              </label>
+
+              <label class="border-2 border-gray-200 rounded-xl p-5 flex flex-col items-center justify-center text-center cursor-pointer hover:border-brand/40 hover:bg-neutral-50 transition-all duration-200 relative group">
+                <input type="radio" name="property_type" value="Multi-Family" class="sr-only">
+                <div class="text-brand text-3xl mb-3 group-hover:scale-110 transition-transform">🏢</div>
+                <span class="text-xs sm:text-sm font-bold text-neutral-800">Multi-Family</span>
+              </label>
+
+              <label class="border-2 border-gray-200 rounded-xl p-5 flex flex-col items-center justify-center text-center cursor-pointer hover:border-brand/40 hover:bg-neutral-50 transition-all duration-200 relative group">
+                <input type="radio" name="property_type" value="Condo/Townhome" class="sr-only">
+                <div class="text-brand text-3xl mb-3 group-hover:scale-110 transition-transform">🏘️</div>
+                <span class="text-xs sm:text-sm font-bold text-neutral-800">Condo / Townhome</span>
+              </label>
+
+              <label class="border-2 border-gray-200 rounded-xl p-5 flex flex-col items-center justify-center text-center cursor-pointer hover:border-brand/40 hover:bg-neutral-50 transition-all duration-200 relative group">
+                <input type="radio" name="property_type" value="Investment Property" class="sr-only">
+                <div class="text-brand text-3xl mb-3 group-hover:scale-110 transition-transform">📈</div>
+                <span class="text-xs sm:text-sm font-bold text-neutral-800">Investment Portfolio</span>
+              </label>
+
+            </div>
+            <div class="pt-6 flex justify-end">
+              <button type="button" id="next-1" class="btn-shine py-3.5 px-8 bg-brand text-white font-bold rounded-lg text-sm shadow-md shadow-brand/10">
+                Next Step
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Location & Units -->
+          <div id="step-2" class="form-step space-y-6 hidden translate-x-full opacity-0">
+            <h3 class="font-heading font-bold text-neutral-900 text-lg mb-4 text-center sm:text-left">Where is your property located?</h3>
+            
+            <div class="space-y-4">
+              <div>
+                <label for="prop-city" class="block text-xs font-bold text-neutral-700 mb-1.5">City *</label>
+                <select id="prop-city" name="prop_city" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand transition-all">
+                  <option value="" disabled selected>Select a city</option>
+                  <option value="San Antonio">San Antonio</option>
+                  <option value="Alamo Heights">Alamo Heights</option>
+                  <option value="Stone Oak">Stone Oak</option>
+                  <option value="Boerne">Boerne</option>
+                  <option value="Cibolo">Cibolo</option>
+                  <option value="Schertz">Schertz</option>
+                  <option value="Leon Valley">Leon Valley</option>
+                  <option value="Castle Hills">Castle Hills</option>
+                  <option value="Olmos Park">Olmos Park</option>
+                  <option value="Hollywood Park">Hollywood Park</option>
+                  <option value="Shavano">Shavano</option>
+                  <option value="Converse">Converse</option>
+                  <option value="Leon Springs">Leon Springs</option>
+                  <option value="Hill Country Village">Hill Country Village</option>
+                  <option value="Grey Forest">Grey Forest</option>
+                  <option value="Other">Other Greater San Antonio Suburb</option>
+                </select>
+              </div>
+              
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="prop-zip" class="block text-xs font-bold text-neutral-700 mb-1.5">ZIP Code *</label>
+                  <input type="text" id="prop-zip" name="prop_zip" required placeholder="78209" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand transition-all">
+                </div>
+                <div>
+                  <label for="prop-units" class="block text-xs font-bold text-neutral-700 mb-1.5">Number of Units *</label>
+                  <input type="number" id="prop-units" name="prop_units" min="1" required placeholder="1" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand transition-all">
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-6 flex justify-between">
+              <button type="button" id="prev-2" class="py-3 px-6 border border-gray-300 text-neutral-600 font-semibold rounded-lg text-sm hover:bg-neutral-50 transition-all">
+                Back
+              </button>
+              <button type="button" id="next-2" class="btn-shine py-3.5 px-8 bg-brand text-white font-bold rounded-lg text-sm">
+                Next Step
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Contact Info -->
+          <div id="step-3" class="form-step space-y-6 hidden translate-x-full opacity-0">
+            <h3 class="font-heading font-bold text-neutral-900 text-lg mb-4 text-center sm:text-left">How can we reach you?</h3>
+            
+            <div class="space-y-4">
+              <div>
+                <label for="contact-name" class="block text-xs font-bold text-neutral-700 mb-1.5">Full Name *</label>
+                <input type="text" id="contact-name" name="contact_name" required placeholder="John Doe" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand transition-all">
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="contact-phone" class="block text-xs font-bold text-neutral-700 mb-1.5">Phone Number *</label>
+                  <input type="tel" id="contact-phone" name="contact_phone" required placeholder="(210) 555-0199" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand transition-all">
+                </div>
+                <div>
+                  <label for="contact-email" class="block text-xs font-bold text-neutral-700 mb-1.5">Email Address *</label>
+                  <input type="email" id="contact-email" name="contact_email" required placeholder="john@example.com" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-brand transition-all">
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-6 flex justify-between">
+              <button type="button" id="prev-3" class="py-3 px-6 border border-gray-300 text-neutral-600 font-semibold rounded-lg text-sm hover:bg-neutral-50 transition-all">
+                Back
+              </button>
+              <button type="submit" class="btn-shine py-3.5 px-8 bg-brand text-white font-bold rounded-lg text-sm shadow-lg shadow-brand/20">
+                Get My Free Analysis
+              </button>
+            </div>
+          </div>
+
+          <!-- Success Screen -->
+          <div id="step-success" class="form-step space-y-6 hidden scale-95 opacity-0 text-center py-8">
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <h3 class="font-heading font-extrabold text-2xl text-neutral-900">Thank you!</h3>
+            <p class="text-neutral-600 text-sm max-w-md mx-auto leading-relaxed">
+              We'll call you within 24 hours with your customized report. Need to talk sooner? Call <a href="tel:+12106951100" class="text-brand font-bold hover:underline">(210) 695-1100</a>.
+            </p>
+          </div>
+
+        </form>
+
+        <div id="form-call-prompt" class="mt-8 text-center">
+          <p class="text-neutral-500 text-sm">
+            Prefer to call? Dial <a href="tel:+12106951100" class="text-brand font-bold hover:underline">(210) 695-1100</a> — we answer the phone.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Sticky Bottom CTA Bar -->
+  <div id="sticky-cta-bar" class="fixed bottom-0 left-0 w-full z-40 bg-brand text-white border-t border-brand-dark/30 shadow-2xl translate-y-full transition-transform duration-300 ease-out">
+    <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <div class="text-xs sm:text-sm">
+        <span class="font-heading font-bold block sm:inline">Free Rental Analysis</span>
+        <span class="text-red-200 hidden sm:inline"> • Find out what your San Antonio property could earn.</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="tel:+12106951100" class="text-xs sm:text-sm font-bold hover:text-red-200 flex items-center gap-1.5 transition-colors">
+          <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          (210) 695-1100
+        </a>
+        <a href="#contact-form" class="btn-shine bg-white text-brand px-4 py-1.5 rounded-lg text-xs font-bold transition-all">
+          Get Free Analysis
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exit-Intent Popup -->
+  <div id="exit-popup" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-neutral-900/60 backdrop-blur-sm exit-popup-overlay"></div>
+    <div class="relative bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 max-w-lg w-full mx-4 text-center z-10 transform scale-95 transition-all duration-300 border border-white/20">
+      <button type="button" class="close-exit-btn absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      
+      <div class="w-16 h-16 bg-brand-bg text-brand rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+
+      <h3 class="font-heading font-extrabold text-2xl text-neutral-900 mb-2 leading-tight">Wait — Don't Leave Without Your Free Rental Analysis!</h3>
+      <p class="text-neutral-600 text-sm mb-6 leading-relaxed">
+        Find out what your San Antonio property could earn with professional management. Enter your details below for a free estimate.
+      </p>
+
+      <!-- Input Fields inside Exit intent -->
+      <form id="exit-popup-form" class="space-y-4 text-left">
+        <div>
+          <label for="exit-email" class="block text-xs font-bold text-neutral-700 mb-1">Email Address *</label>
+          <input type="email" id="exit-email" required placeholder="john@example.com" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all">
+        </div>
+        <div>
+          <label for="exit-phone" class="block text-xs font-bold text-neutral-700 mb-1">Phone Number *</label>
+          <input type="tel" id="exit-phone" required placeholder="(210) 555-0199" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all">
+        </div>
+        <button type="submit" class="btn-shine w-full py-3 bg-brand text-white font-bold rounded-lg text-sm transition-colors mt-2">
+          Get My Free Analysis
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Social Proof Toasts Container -->
+  <div id="toast-container" class="fixed bottom-24 left-6 z-50 pointer-events-none max-w-sm w-full hidden sm:block"></div>
+
+  <!-- Success Modal (Shared Generic Popup) -->
+  <div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="absolute inset-0 bg-neutral-900/60 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 text-center z-10 border border-neutral-100">
+      <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <h3 class="font-heading font-bold text-xl text-neutral-900 mb-2">Analysis Requested!</h3>
+      <p class="text-neutral-600 text-sm leading-relaxed mb-6">
+        Thank you for requesting your rental analysis. A licensed Red Wagon property expert will review your property data and reach out to you within 24 hours.
+      </p>
+      <button id="close-modal-btn" class="w-full py-3 bg-brand text-white font-bold rounded-lg hover:bg-brand-light transition-colors">
+        Got It, Thanks!
+      </button>
+    </div>
+  </div>
+
+  <!-- 13. FOOTER -->
+  <footer class="bg-neutral-950 text-neutral-400 pt-20 pb-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Top Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-neutral-800">
+        
+        <!-- Left: Branding & Contact -->
+        <div class="lg:col-span-4 space-y-6">
+          <a href="#" class="flex items-center space-x-3">
+            <div class="bg-brand text-white p-2 rounded-lg">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 8h15v6H3V8z" stroke-linejoin="round" />
+                <path d="M18 11h4l-1-4" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="6" cy="17" r="2.5" />
+                <circle cx="15" cy="17" r="2.5" />
+              </svg>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-heading font-extrabold text-lg text-white leading-none">RED WAGON</span>
+              <span class="font-heading font-medium text-xs tracking-widest text-brand uppercase leading-none mt-1">Properties</span>
+            </div>
+          </a>
+          <p class="text-sm text-neutral-400 max-w-sm leading-relaxed">
+            San Antonio's trusted, licensed property management experts. We maximize rental income and take the headaches out of landlord life.
+          </p>
+          <div class="space-y-3 text-sm">
+            <a href="tel:+12106951100" class="flex items-center gap-2 hover:text-white transition-colors">
+              <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              (210) 695-1100
+            </a>
+            <a href="mailto:redwagonproperties@gmail.com" class="flex items-center gap-2 hover:text-white transition-colors">
+              <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              redwagonproperties@gmail.com
+            </a>
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-brand shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span class="leading-normal">16719 Huebner Road #201, San Antonio, TX 78248</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Middle: Quick Links -->
+        <div class="lg:col-span-3 lg:pl-8 space-y-6">
+          <h4 class="font-heading font-bold text-white text-sm uppercase tracking-wider">Quick Links</h4>
+          <ul class="space-y-3.5 text-sm">
+            <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+            <li><a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a></li>
+            <li><a href="#reviews" class="hover:text-white transition-colors">Reviews</a></li>
+            <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="#service-areas" class="hover:text-white transition-colors">Service Areas</a></li>
+          </ul>
+        </div>
+
+        <!-- Right: Hours & Service Areas Summary -->
+        <div class="lg:col-span-5 space-y-6">
+          <h4 class="font-heading font-bold text-white text-sm uppercase tracking-wider">Business Info</h4>
+          <div class="space-y-4 text-sm">
+            <div>
+              <p class="font-semibold text-neutral-300">Office Hours:</p>
+              <p class="mt-1">Mon–Thu: 9:00 AM – 5:00 PM</p>
+              <p>Fri: 9:00 AM – 3:00 PM</p>
+              <p>Sat–Sun: Closed</p>
+            </div>
+            <div>
+              <p class="font-semibold text-neutral-300">Core Suburbs Managed:</p>
+              <p class="mt-1 leading-relaxed text-xs">
+                San Antonio, Alamo Heights, Stone Oak, Boerne, Cibolo, Schertz, Leon Valley, Castle Hills, Olmos Park, Hollywood Park, Shavano, Converse, Leon Springs, Hill Country Village, Grey Forest
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Line -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 gap-4">
+        <p>© 2026 Red Wagon Properties. Licensed Real Estate Agents in the State of Texas. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-neutral-300">Privacy Policy</a>
+          <a href="#" class="hover:text-neutral-300">Terms of Service</a>
+          <a href="#" class="hover:text-neutral-300">Fair Housing Statement</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- MOBILE FLOATING CALL BUTTON (With pulsing indicator & Tap popover options) -->
+  <div class="md:hidden fixed bottom-6 right-6 z-40" id="mobile-floating-btn" style="transition: bottom 0.3s ease;">
+    <!-- Floating Popover Menu -->
+    <div id="floating-menu" class="hidden absolute bottom-16 right-0 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 w-52 flex flex-col gap-3 scale-95 opacity-0 origin-bottom-right transition-all duration-200">
+      <a href="tel:+12106951100" class="flex items-center gap-2 px-3 py-2.5 bg-brand text-white text-xs font-bold rounded-lg hover:bg-brand-light transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        Call (210) 695-1100
+      </a>
+      <a href="#contact-form" id="floating-cta-close" class="flex items-center justify-center gap-2 px-3 py-2 border border-gray-200 text-neutral-800 text-xs font-bold rounded-lg hover:bg-neutral-50 transition-colors">
+        Get Free Analysis
+      </a>
+    </div>
+
+    <!-- The circular floating trigger -->
+    <button type="button" id="floating-main-trigger" class="mobile-floating-glow flex items-center justify-center w-14 h-14 bg-brand text-white rounded-full shadow-2xl focus:outline-none relative" aria-label="Quick Actions">
+      <!-- Normal state: phone icon -->
+      <svg id="floating-phone-icon" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+      </svg>
+      <!-- Open state: X close icon -->
+      <svg id="floating-close-icon" class="w-6 h-6 hidden transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- JavaScript logic -->
+  <script>
+    // 1. Scroll Progress Bar Fill
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('scroll-progress').style.width = scrolled + '%';
+    });
+
+    // 2. Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      if (isOpen) {
+        mobileMenu.classList.add('hidden');
+        hamburgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      } else {
+        mobileMenu.classList.remove('hidden');
+        hamburgerIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+      }
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        hamburgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      });
+    });
+
+    // 3. Sticky Navbar Blur & Shadow on Scroll + Bottom Sticky CTA slide-in
+    const navbar = document.getElementById('navbar');
+    const stickyBar = document.getElementById('sticky-cta-bar');
+    const floatingCallBtn = document.getElementById('mobile-floating-btn');
+
+    window.addEventListener('scroll', () => {
+      // Navbar scroll effect
+      if (window.scrollY > 50) {
+        navbar.classList.add('nav-scrolled');
+      } else {
+        navbar.classList.remove('nav-scrolled');
+      }
+
+      // Sticky CTA Bar slide-up trigger (after scrolling past hero section)
+      if (window.scrollY > 600) {
+        stickyBar.classList.remove('translate-y-full');
+        if (floatingCallBtn) {
+          floatingCallBtn.style.bottom = '76px'; // Prevent floating button overlaying bar
+        }
+      } else {
+        stickyBar.classList.add('translate-y-full');
+        if (floatingCallBtn) {
+          floatingCallBtn.style.bottom = '24px';
+        }
+      }
+    });
+
+    // 4. Staggered Scroll-Triggered Reveal Animations using Intersection Observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const element = entry.target;
+          if (element.classList.contains('reveal-container')) {
+            const items = element.querySelectorAll('.reveal-item');
+            items.forEach((item, idx) => {
+              setTimeout(() => {
+                item.classList.add('visible');
+              }, idx * 100); // 100ms staggered delay
+            });
+          } else {
+            element.classList.add('visible');
+          }
+          revealObserver.unobserve(element);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-container').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // 5. Stat Counter Animation and SVG Progress Rings (Triggered on Scroll)
+    const statsSection = document.getElementById('stats-section');
+    if (statsSection) {
+      const statsObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const items = entry.target.querySelectorAll('.stat-item');
+            items.forEach(item => {
+              const counter = item.querySelector('.stat-counter');
+              const ring = item.querySelector('.stat-progress-ring');
+              const target = parseInt(counter.getAttribute('data-target'), 10);
+              const suffix = counter.getAttribute('data-suffix') || '';
+              const duration = 2000; // 2 seconds
+              const startTime = performance.now();
+              const circumference = 263.89; // Circumference for r=42 circle
+
+              function updateStats(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Cubic ease-out formula
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const currentValue = Math.floor(easeProgress * target);
+
+                counter.textContent = currentValue;
+
+                if (ring) {
+                  // Circumference offset calculation
+                  const offset = circumference * (1 - easeProgress);
+                  ring.style.strokeDashoffset = offset;
+                }
+
+                if (progress < 1) {
+                  requestAnimationFrame(updateStats);
+                } else {
+                  counter.textContent = target + suffix;
+                  if (ring) ring.style.strokeDashoffset = 0;
+                }
+              }
+
+              requestAnimationFrame(updateStats);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      statsObserver.observe(statsSection);
+    }
+
+    // 6. FAQ Accordion (Vanilla JS with 0.35s ease transitions)
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const toggle = item.querySelector('.faq-toggle');
+      const content = item.querySelector('.faq-content');
+      
+      toggle.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+
+        // Close all other open items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item && otherItem.classList.contains('active')) {
+            otherItem.classList.remove('active');
+            const otherContent = otherItem.querySelector('.faq-content');
+            otherContent.style.maxHeight = '0px';
+          }
+        });
+
+        // Toggle clicked item
+        if (isActive) {
+          item.classList.remove('active');
+          content.style.maxHeight = '0px';
+        } else {
+          item.classList.add('active');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // 7. Multi-Step Form Logic & Transitions
+    const multiForm = document.getElementById('multi-step-form');
+    if (multiForm) {
+      const step1 = document.getElementById('step-1');
+      const step2 = document.getElementById('step-2');
+      const step3 = document.getElementById('step-3');
+      const stepSuccess = document.getElementById('step-success');
+      const next1 = document.getElementById('next-1');
+      const next2 = document.getElementById('next-2');
+      const prev2 = document.getElementById('prev-2');
+      const prev3 = document.getElementById('prev-3');
+      const stepLabel = document.getElementById('form-step-label');
+      const stepPercent = document.getElementById('form-step-percent');
+      const progressBar = document.getElementById('form-progress-bar');
+      const progressContainer = document.getElementById('progress-container');
+      const callPrompt = document.getElementById('form-call-prompt');
+
+      // Visual Radio selections card highlights
+      const radioLabels = step1.querySelectorAll('label');
+      radioLabels.forEach(label => {
+        const radioInput = label.querySelector('input');
+        
+        radioInput.addEventListener('change', () => {
+          radioLabels.forEach(l => l.classList.remove('border-brand', 'bg-brand/5'));
+          if (radioInput.checked) {
+            label.classList.add('border-brand', 'bg-brand/5');
+          }
+        });
+      });
+
+      function validateInputs(stepDiv) {
+        const inputs = stepDiv.querySelectorAll('input, select');
+        let isValid = true;
+        inputs.forEach(input => {
+          if (!input.checkValidity()) {
+            input.reportValidity();
+            isValid = false;
+          }
+        });
+        return isValid;
+      }
+
+      function slideTransition(fromStep, toStep, direction) {
+        // Slide out
+        fromStep.classList.add('opacity-0');
+        if (direction === 'next') {
+          fromStep.classList.add('-translate-x-full');
+        } else {
+          fromStep.classList.add('translate-x-full');
+        }
+
+        setTimeout(() => {
+          fromStep.classList.add('hidden');
+          toStep.classList.remove('hidden');
+
+          // Trigger reflow
+          toStep.offsetHeight;
+
+          toStep.classList.remove('-translate-x-full', 'translate-x-full', 'opacity-0');
+        }, 200);
+      }
+
+      next1.addEventListener('click', () => {
+        if (validateInputs(step1)) {
+          slideTransition(step1, step2, 'next');
+          stepLabel.textContent = "Step 2 of 3";
+          stepPercent.textContent = "66% Complete";
+          progressBar.style.width = "66%";
+        }
+      });
+
+      prev2.addEventListener('click', () => {
+        slideTransition(step2, step1, 'prev');
+        stepLabel.textContent = "Step 1 of 3";
+        stepPercent.textContent = "33% Complete";
+        progressBar.style.width = "33%";
+      });
+
+      next2.addEventListener('click', () => {
+        if (validateInputs(step2)) {
+          slideTransition(step2, step3, 'next');
+          stepLabel.textContent = "Step 3 of 3";
+          stepPercent.textContent = "90% Complete";
+          progressBar.style.width = "90%";
+        }
+      });
+
+      prev3.addEventListener('click', () => {
+        slideTransition(step3, step2, 'prev');
+        stepLabel.textContent = "Step 2 of 3";
+        stepPercent.textContent = "66% Complete";
+        progressBar.style.width = "66%";
+      });
+
+      multiForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (validateInputs(step3)) {
+          slideTransition(step3, stepSuccess, 'next');
+          progressContainer.classList.add('hidden');
+          if (callPrompt) callPrompt.classList.add('hidden');
+          stepSuccess.classList.remove('scale-95');
+        }
+      });
+    }
+
+    // 8. Exit-Intent Modal Dialog & Timeout Trigger
+    const exitPopup = document.getElementById('exit-popup');
+    if (exitPopup) {
+      const exitModal = exitPopup.querySelector('.relative');
+      const closeExitBtn = exitPopup.querySelector('.close-exit-btn');
+      const exitOverlay = exitPopup.querySelector('.exit-popup-overlay');
+      const exitForm = document.getElementById('exit-popup-form');
+
+      let popupSeen = sessionStorage.getItem('exit_popup_triggered') === 'true';
+
+      function showExitModal() {
+        if (popupSeen) return;
+        popupSeen = true;
+        sessionStorage.setItem('exit_popup_triggered', 'true');
+        
+        exitPopup.classList.remove('hidden');
+        // Let browser register display change first
+        setTimeout(() => {
+          exitPopup.classList.remove('opacity-0');
+          exitModal.classList.remove('scale-95');
+        }, 10);
+      }
+
+      // Exit intent detection (cursor moves to top of viewport)
+      document.addEventListener('mouseleave', (e) => {
+        if (e.clientY < 20) {
+          showExitModal();
+        }
+      });
+
+      // 30 seconds timer trigger for mobile/fallback
+      setTimeout(() => {
+        showExitModal();
+      }, 30000);
+
+      function hideExitModal() {
+        exitPopup.classList.add('opacity-0');
+        exitModal.classList.add('scale-95');
+        setTimeout(() => {
+          exitPopup.classList.add('hidden');
+        }, 300);
+      }
+
+      closeExitBtn.addEventListener('click', hideExitModal);
+      exitOverlay.addEventListener('click', hideExitModal);
+      
+      exitForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        hideExitModal();
+        // show main success popup
+        const successModal = document.getElementById('success-modal');
+        successModal.classList.remove('hidden');
+      });
+    }
+
+    // 9. Social Proof Toast Notifications
+    const socialToasts = [
+      { text: "A property owner in Stone Oak just requested a free analysis", icon: "📈" },
+      { text: "A landlord in Alamo Heights just called for a consultation", icon: "📞" },
+      { text: "New client in Boerne signed up for property management", icon: "🏡" }
+    ];
+    let activeToastIndex = 0;
+
+    function renderToastNotification() {
+      if (activeToastIndex >= socialToasts.length) return;
+      const toastBox = document.getElementById('toast-container');
+      if (!toastBox) return;
+
+      const toastObj = socialToasts[activeToastIndex];
+      const toastNode = document.createElement('div');
+      toastNode.className = "flex items-center gap-3 bg-white border border-gray-100 rounded-xl p-4 shadow-xl transition-all duration-500 translate-x-[-120%] pointer-events-auto mb-3 max-w-sm";
+      toastNode.innerHTML = `
+        <div class="w-10 h-10 bg-brand/10 text-brand rounded-full flex items-center justify-center shrink-0 font-bold text-lg">
+          ${toastObj.icon}
+        </div>
+        <div>
+          <p class="text-xs text-neutral-800 font-medium leading-relaxed">${toastObj.text}</p>
+          <p class="text-[10px] text-neutral-400 mt-0.5">Just now</p>
+        </div>
+      `;
+      toastBox.appendChild(toastNode);
+      
+      // Animation entry
+      setTimeout(() => {
+        toastNode.classList.remove('translate-x-[-120%]');
+      }, 50);
+
+      // Animation exit
+      setTimeout(() => {
+        toastNode.classList.add('translate-x-[-120%]', 'opacity-0');
+        setTimeout(() => {
+          toastNode.remove();
+        }, 500);
+      }, 5000);
+
+      activeToastIndex++;
+      
+      // Schedule next toast if available
+      if (activeToastIndex < socialToasts.length) {
+        setTimeout(renderToastNotification, 18000); // Trigger every 18 seconds
+      }
+    }
+
+    // Start Social Proof Toasts after 10 seconds
+    setTimeout(renderToastNotification, 10000);
+
+    // 10. Mobile Floating Trigger & Menu Popover
+    const floatingMainTrigger = document.getElementById('floating-main-trigger');
+    const floatingMenu = document.getElementById('floating-menu');
+    const floatingPhoneIcon = document.getElementById('floating-phone-icon');
+    const floatingCloseIcon = document.getElementById('floating-close-icon');
+
+    if (floatingMainTrigger) {
+      floatingMainTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isHidden = floatingMenu.classList.contains('hidden');
+        if (isHidden) {
+          // Open menu
+          floatingMenu.classList.remove('hidden');
+          floatingPhoneIcon.classList.add('hidden');
+          floatingCloseIcon.classList.remove('hidden');
+          setTimeout(() => {
+            floatingMenu.classList.remove('scale-95', 'opacity-0');
+          }, 10);
+        } else {
+          // Close menu
+          floatingMenu.classList.add('scale-95', 'opacity-0');
+          floatingCloseIcon.classList.add('hidden');
+          floatingPhoneIcon.classList.remove('hidden');
+          setTimeout(() => {
+            floatingMenu.classList.add('hidden');
+          }, 200);
+        }
+      });
+
+      // Close menu on clicks anywhere else on the document
+      document.addEventListener('click', () => {
+        if (!floatingMenu.classList.contains('hidden')) {
+          floatingMenu.classList.add('scale-95', 'opacity-0');
+          floatingCloseIcon.classList.add('hidden');
+          floatingPhoneIcon.classList.remove('hidden');
+          setTimeout(() => {
+            floatingMenu.classList.add('hidden');
+          }, 200);
+        }
+      });
+      
+      // Close menu when tapping sub-links
+      document.getElementById('floating-cta-close').addEventListener('click', () => {
+        floatingMenu.classList.add('scale-95', 'opacity-0');
+        floatingCloseIcon.classList.add('hidden');
+        floatingPhoneIcon.classList.remove('hidden');
+        setTimeout(() => {
+          floatingMenu.classList.add('hidden');
+        }, 200);
+      });
+    }
+
+    // 11. Generic Success Modal Handlers
+    const successModal = document.getElementById('success-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+
+    closeModalBtn.addEventListener('click', () => {
+      successModal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    });
+
+    successModal.addEventListener('click', (e) => {
+      if (e.target === successModal) {
+        successModal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+.DS_Store
+.claude/
+.system_generated/
+*.log
