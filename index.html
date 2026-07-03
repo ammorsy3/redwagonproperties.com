@@ -425,21 +425,21 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[calc(100vh-5rem)] py-12 lg:py-0">
 
         <!-- LEFT: Text Content -->
-        <div class="flex flex-col justify-center">
+        <div class="flex flex-col justify-center overflow-hidden">
           <!-- Badge -->
-          <span class="float-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand/20 border border-brand/40 text-red-300 mb-8 w-fit uppercase tracking-wider">
+          <span class="float-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand/20 border border-brand/40 text-red-300 mb-6 w-fit uppercase tracking-wider">
             <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span> Licensed Texas Real Estate Brokerage
           </span>
 
           <!-- Main Headline -->
           <h1 class="font-heading font-black text-white leading-none mb-4">
-            <span class="block text-6xl sm:text-7xl md:text-8xl lg:text-8xl xl:text-9xl tracking-tight">Stop the</span>
-            <!-- Typewriter line -->
-            <span class="block mt-2" style="min-height: 1.1em;">
-              <span id="typewriter-text" class="text-brand text-6xl sm:text-7xl md:text-8xl lg:text-8xl xl:text-9xl tracking-tight typewriter-cursor font-black"></span>
-            </span>
+            <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-7xl tracking-tight">Stop the</span>
+            <!-- Typewriter line: fixed height so layout never shifts -->
+            <div class="overflow-hidden" style="height: 1.15em; margin-top: 0.1em;">
+              <span id="typewriter-text" class="block text-brand text-5xl sm:text-6xl md:text-7xl lg:text-7xl tracking-tight typewriter-cursor font-black whitespace-nowrap"></span>
+            </div>
             <!-- Underline accent -->
-            <span class="block w-24 h-1.5 bg-brand rounded-full mt-4 mb-6"></span>
+            <span class="block w-20 h-1.5 bg-brand rounded-full mt-5 mb-5"></span>
           </h1>
 
           <!-- Tagline -->
@@ -2081,7 +2081,7 @@
     });
 
     // 12. Typewriter Animation (with slide-up/fade transitions)
-    const words = ["Late Rent", "Tenant Calls", "Vacancies", "Maintenance Headaches"];
+    const words = ["Late Rent", "Vacancies", "Tenant Calls", "Repairs", "Stress"];
     let wordIdx = 0;
     let charIdx = 0;
     let isDeleting = false;
@@ -2089,44 +2089,32 @@
 
     function type() {
       const currentWord = words[wordIdx];
-      
+
       if (!isDeleting) {
         typewriterEl.textContent = currentWord.substring(0, charIdx + 1);
         charIdx++;
-        
+
         if (charIdx === currentWord.length) {
           isDeleting = true;
-          setTimeout(type, 2000); // 2s pause once typed
+          setTimeout(type, 2200); // pause after full word
         } else {
-          setTimeout(type, 80); // Typing speed
+          setTimeout(type, 75); // typing speed
         }
       } else {
-        // SaaS slide-up and fade-out
-        typewriterEl.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease';
-        typewriterEl.style.transform = 'translateY(-15px)';
+        // Fade out cleanly
+        typewriterEl.style.transition = 'opacity 0.25s ease';
         typewriterEl.style.opacity = '0';
-        
+
         setTimeout(() => {
           wordIdx = (wordIdx + 1) % words.length;
           charIdx = 0;
           isDeleting = false;
-          typewriterEl.textContent = "";
-          
-          // Position below for slide-up
+          typewriterEl.textContent = '';
           typewriterEl.style.transition = 'none';
-          typewriterEl.style.transform = 'translateY(15px)';
-          typewriterEl.style.opacity = '0';
-          
-          // Force layout recalculation
-          typewriterEl.offsetHeight;
-          
-          // Slide in and type next word
-          typewriterEl.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease';
-          typewriterEl.style.transform = 'translateY(0)';
           typewriterEl.style.opacity = '1';
-          
-          setTimeout(type, 150);
-        }, 400);
+          typewriterEl.offsetHeight; // force reflow
+          setTimeout(type, 100);
+        }, 280);
       }
     }
 
