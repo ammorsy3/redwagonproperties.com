@@ -156,7 +156,7 @@
       animation: bg-shift 8s ease infinite;
     }
     .bg-light-red-gradient {
-      background: linear-gradient(135deg, #FFF6M6 0%, #FFF5F5 0%, #FFE8E8 50%, #FFF5F5 100%);
+      background: linear-gradient(135deg, #FFF5F5 0%, #FFE8E8 50%, #FFF5F5 100%);
       background-size: 200% 200%;
       animation: bg-shift 8s ease infinite;
     }
@@ -173,6 +173,41 @@
       transform: translateY(-6px);
       border-top-color: #A62222;
       box-shadow: 0 20px 40px -12px rgba(166, 34, 34, 0.2), 0 8px 16px -8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Spotlight / shimmer hover (Magic UI "MagicCard" style) */
+    .spotlight-card {
+      transition: border-color 0.35s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .spotlight-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(166, 34, 34, 0.22), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .spotlight-card:hover::before {
+      opacity: 1;
+    }
+    .spotlight-card:hover {
+      border-color: rgba(166, 34, 34, 0.4);
+    }
+    .spotlight-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Bento cards */
+    .bento-card {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bento-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 48px -18px rgba(166, 34, 34, 0.28);
     }
     
     .testimonial-card {
@@ -271,6 +306,71 @@
     * {
       scrollbar-width: thin;
       scrollbar-color: #A62222 #111111;
+    }
+
+    /* 13b. Infinite Marquee (Magic UI style) */
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee-scroll 40s linear infinite;
+    }
+    .marquee-track:hover .marquee {
+      animation-play-state: paused;
+    }
+    /* Fade edges of the marquee row */
+    .marquee-mask {
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    }
+
+    /* 13c. Animated Gradient Border (shadcn/Aceternity "BorderBeam" feel) */
+    @keyframes border-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .gradient-border {
+      position: relative;
+      border-radius: 1.6rem;
+      padding: 2px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset: -60%;
+      background: conic-gradient(from 0deg, transparent 0deg, #A62222 30deg, #e04545 80deg, transparent 130deg, transparent 360deg);
+      animation: border-spin 6s linear infinite;
+    }
+
+    /* 13d. Avatar stack */
+    .avatar-stack .avatar-chip {
+      box-shadow: 0 0 0 2px #0d0d0d;
+      transition: transform 0.25s ease;
+    }
+    .avatar-stack:hover .avatar-chip {
+      transform: translateX(2px);
+    }
+
+    /* 13e. Aurora glow blobs */
+    @keyframes aurora-drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.95); }
+    }
+    .aurora-blob {
+      animation: aurora-drift 14s ease-in-out infinite;
+      filter: blur(60px);
+    }
+
+    /* 13f. Marquee card */
+    .marquee-review {
+      width: 340px;
     }
 
     /* 13. Respect Prefers Reduced Motion */
@@ -432,18 +532,19 @@
           </span>
 
           <!-- Main Headline -->
-          <h1 class="font-heading font-black text-white leading-none mb-4">
-            <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-7xl tracking-tight">Stop the</span>
-            <!-- Typewriter line: fixed height so layout never shifts -->
-            <div class="overflow-hidden" style="height: 1.15em; margin-top: 0.1em;">
-              <span id="typewriter-text" class="block text-brand text-5xl sm:text-6xl md:text-7xl lg:text-7xl tracking-tight typewriter-cursor font-black whitespace-nowrap"></span>
+          <h1 class="font-heading font-black text-white leading-[0.95] mb-5">
+            <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight">Stop the</span>
+            <!-- Typewriter line: div carries the same font-size as the span above it, so its
+                 1em/leading-none height always matches the glyph height exactly (no clipping). -->
+            <div class="overflow-hidden text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none" style="margin-top: 0.12em;">
+              <span id="typewriter-text" class="block text-brand tracking-tight typewriter-cursor font-black whitespace-nowrap">&nbsp;</span>
             </div>
             <!-- Underline accent -->
-            <span class="block w-20 h-1.5 bg-brand rounded-full mt-5 mb-5"></span>
+            <span class="block w-24 h-1.5 bg-brand rounded-full mt-6 mb-5"></span>
           </h1>
 
           <!-- Tagline -->
-          <p class="text-neutral-300 text-lg sm:text-xl font-semibold tracking-wide mb-3">
+          <p class="text-neutral-200 text-xl sm:text-2xl font-semibold tracking-wide mb-3">
             Expert. Transparent. Stress-Free.
           </p>
 
@@ -463,6 +564,27 @@
               </svg>
               (210) 695-1100
             </a>
+          </div>
+
+          <!-- Social Proof: Avatar Stack + Rating -->
+          <div class="flex items-center gap-4 mb-8">
+            <div class="avatar-stack flex -space-x-3">
+              <span class="avatar-chip w-9 h-9 rounded-full flex items-center justify-center text-[11px] font-bold text-white" style="background: linear-gradient(135deg,#A62222,#e04545);">MG</span>
+              <span class="avatar-chip w-9 h-9 rounded-full flex items-center justify-center text-[11px] font-bold text-white" style="background: linear-gradient(135deg,#7D1616,#C83B3B);">JC</span>
+              <span class="avatar-chip w-9 h-9 rounded-full flex items-center justify-center text-[11px] font-bold text-white" style="background: linear-gradient(135deg,#C83B3B,#A62222);">PR</span>
+              <span class="avatar-chip w-9 h-9 rounded-full flex items-center justify-center text-[11px] font-bold text-white" style="background: linear-gradient(135deg,#e04545,#7D1616);">DK</span>
+              <span class="avatar-chip w-9 h-9 rounded-full flex items-center justify-center text-[11px] font-bold text-white bg-white/10 border border-white/20">200+</span>
+            </div>
+            <div class="flex flex-col">
+              <div class="flex text-yellow-400">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              </div>
+              <span class="text-neutral-400 text-xs font-medium mt-0.5">Rated <span class="text-white font-bold">4.9/5</span> by 200+ SA owners</span>
+            </div>
           </div>
 
           <!-- Trust badges -->
@@ -493,8 +615,8 @@
           <!-- Decorative glow behind image -->
           <div class="absolute inset-0 rounded-3xl z-0" style="background: radial-gradient(ellipse at center, rgba(166,34,34,0.2) 0%, transparent 70%); filter: blur(30px);"></div>
           <!-- Image card -->
-          <div class="relative z-10 w-full max-w-lg">
-            <div class="rounded-3xl overflow-hidden border border-white/10 shadow-2xl" style="box-shadow: 0 40px 80px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05);">
+          <div class="relative z-10 w-full max-w-lg gradient-border" style="box-shadow: 0 40px 80px -20px rgba(0,0,0,0.7);">
+            <div class="rounded-[1.45rem] overflow-hidden relative">
               <img src="images/agent_homeowner.jpg" alt="Red Wagon Properties professional agent" class="w-full h-[540px] object-cover object-center">
               <!-- Overlay badge on image -->
               <div class="absolute bottom-6 left-6 right-6">
@@ -585,7 +707,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal-container">
         
         <!-- Card 1 -->
-        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+        <div class="service-card spotlight-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item overflow-hidden">
           <div>
             <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -604,7 +726,7 @@
         </div>
 
         <!-- Card 2 -->
-        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+        <div class="service-card spotlight-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item overflow-hidden">
           <div>
             <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -623,7 +745,7 @@
         </div>
 
         <!-- Card 3 -->
-        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+        <div class="service-card spotlight-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item overflow-hidden">
           <div>
             <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -643,7 +765,7 @@
         </div>
 
         <!-- Card 4 -->
-        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+        <div class="service-card spotlight-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item overflow-hidden">
           <div>
             <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -662,7 +784,7 @@
         </div>
 
         <!-- Card 5 -->
-        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+        <div class="service-card spotlight-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item overflow-hidden">
           <div>
             <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -681,7 +803,7 @@
         </div>
 
         <!-- Card 6 -->
-        <div class="service-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item">
+        <div class="service-card spotlight-card shadow-layered bg-white border border-gray-100 rounded-xl p-8 flex flex-col justify-between group reveal-item overflow-hidden">
           <div>
             <div class="bg-brand-bg text-brand p-3.5 rounded-lg w-fit group-hover:bg-brand group-hover:text-white transition-all duration-300 mb-6">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -895,96 +1017,146 @@
   <!-- 7. WHY CHOOSE US SECTION -->
   <section class="py-24 bg-white scroll-mt-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        
-        <!-- Left Column (Text benefits) -->
-        <div class="space-y-8 reveal">
-          <h2 class="gradient-text-brand font-heading font-extrabold text-3xl sm:text-4xl tracking-tight">
-            Why San Antonio Owners Choose Red Wagon
-          </h2>
-          <div class="w-16 h-1 bg-brand rounded-full"></div>
-          
-          <div class="space-y-6">
-            
-            <!-- Benefit 1 -->
-            <div class="flex items-start gap-4">
-              <div class="mt-1 bg-brand/10 text-brand p-1.5 rounded-full shrink-0">
-                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-heading font-bold text-neutral-900 text-lg">Licensed Real Estate Agents</h4>
-                <p class="text-neutral-600 text-sm mt-1">
-                  We're licensed real estate agents, not just property managers — that means deeper market knowledge, absolute regulatory compliance, and better investment results.
-                </p>
-              </div>
-            </div>
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <h2 class="gradient-text-brand font-heading font-extrabold text-3xl sm:text-4xl tracking-tight">
+          Why San Antonio Owners Choose Red Wagon
+        </h2>
+        <div class="w-16 h-1 bg-brand mx-auto mt-4 rounded-full"></div>
+        <p class="mt-4 text-lg text-neutral-600">
+          Licensed experts, dedicated managers, and total transparency — the difference is in the details.
+        </p>
+      </div>
 
-            <!-- Benefit 2 -->
-            <div class="flex items-start gap-4">
-              <div class="mt-1 bg-brand/10 text-brand p-1.5 rounded-full shrink-0">
-                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-heading font-bold text-neutral-900 text-lg">Dedicated Property Managers</h4>
-                <p class="text-neutral-600 text-sm mt-1">
-                  You get a dedicated property manager who actually knows your property and tenants, not a rotating 1-800 support queue.
-                </p>
-              </div>
-            </div>
+      <!-- Bento Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 reveal-container">
 
-            <!-- Benefit 3 -->
-            <div class="flex items-start gap-4">
-              <div class="mt-1 bg-brand/10 text-brand p-1.5 rounded-full shrink-0">
-                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-heading font-bold text-neutral-900 text-lg">Transparent Flat-Rate Pricing</h4>
-                <p class="text-neutral-600 text-sm mt-1">
-                  No hidden fees, no lease renewal surprises, and no upfront startup costs. You only pay when we perform.
-                </p>
-              </div>
+        <!-- Feature Card: Licensed (large, dark) -->
+        <div class="bento-card sm:col-span-2 lg:col-span-2 lg:row-span-2 relative overflow-hidden rounded-2xl p-8 flex flex-col justify-between reveal-item text-white" style="background: linear-gradient(135deg, #7D1616 0%, #A62222 55%, #C83B3B 100%);">
+          <div class="absolute -top-16 -right-16 w-64 h-64 rounded-full border border-white/10"></div>
+          <div class="absolute -bottom-24 -left-20 w-72 h-72 rounded-full border border-white/10"></div>
+          <div class="relative">
+            <div class="bg-white/15 p-3.5 rounded-xl w-fit mb-6">
+              <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
             </div>
-
-            <!-- Benefit 4 -->
-            <div class="flex items-start gap-4">
-              <div class="mt-1 bg-brand/10 text-brand p-1.5 rounded-full shrink-0">
-                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-heading font-bold text-neutral-900 text-lg">Deep Local Expertise</h4>
-                <p class="text-neutral-600 text-sm mt-1">
-                  We are a local San Antonio team. We live and work in the community, so we know the local regulations, neighborhoods, and market conditions inside out.
-                </p>
-              </div>
+            <h3 class="font-heading font-extrabold text-2xl sm:text-3xl leading-tight mb-3">Licensed Real Estate Agents — Not Just Managers</h3>
+            <p class="text-red-100/90 text-sm sm:text-base leading-relaxed max-w-md">
+              We're licensed Texas real estate agents. That means deeper market knowledge, full regulatory compliance, and smarter pricing that puts more money in your pocket.
+            </p>
+          </div>
+          <div class="relative mt-8 flex items-center gap-6">
+            <div>
+              <div class="font-heading font-black text-3xl">100%</div>
+              <div class="text-red-200 text-xs font-semibold uppercase tracking-wider mt-1">Licensed &amp; Insured</div>
             </div>
-
+            <div class="h-10 w-px bg-white/20"></div>
+            <div>
+              <div class="font-heading font-black text-3xl">4.9<span class="text-xl">/5</span></div>
+              <div class="text-red-200 text-xs font-semibold uppercase tracking-wider mt-1">Owner Rating</div>
+            </div>
           </div>
         </div>
 
-        <!-- Right Column (Image representation) -->
-        <div class="relative reveal">
-          <div class="absolute -inset-4 bg-brand/5 rounded-2xl -rotate-2 scale-98 z-0"></div>
-          <img src="images/agent_homeowner.jpg" alt="Real estate agent shaking hands with homeowner" class="relative z-10 rounded-2xl shadow-xl border border-gray-100 object-cover w-full h-[450px]">
+        <!-- Image Card (tall, right) -->
+        <div class="bento-card sm:col-span-2 lg:col-span-2 lg:row-span-2 relative overflow-hidden rounded-2xl reveal-item min-h-[240px]">
+          <img src="images/property_manager_office.jpg" alt="Red Wagon Properties property manager reviewing lease" class="absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(13,13,13,0.85) 0%, rgba(13,13,13,0.15) 55%, transparent 100%);"></div>
+          <div class="relative h-full flex flex-col justify-end p-8">
+            <h4 class="font-heading font-bold text-white text-xl mb-1">A Real Team, Reviewing Your Property</h4>
+            <p class="text-neutral-300 text-sm max-w-sm">Local, hands-on, and accountable — you'll always know who's managing your investment.</p>
+          </div>
+        </div>
+
+        <!-- Dedicated Managers -->
+        <div class="bento-card spotlight-card relative overflow-hidden bg-white border border-gray-100 rounded-2xl p-6 reveal-item">
+          <div class="bg-brand-bg text-brand p-3 rounded-xl w-fit mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-3.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-3-6.65"/>
+            </svg>
+          </div>
+          <h4 class="font-heading font-bold text-neutral-900 text-lg mb-2">Dedicated Property Managers</h4>
+          <p class="text-neutral-600 text-sm leading-relaxed">
+            A real manager who knows your property and tenants — never a rotating 1-800 queue.
+          </p>
+        </div>
+
+        <!-- Transparent Pricing -->
+        <div class="bento-card spotlight-card relative overflow-hidden bg-white border border-gray-100 rounded-2xl p-6 reveal-item">
+          <div class="bg-brand-bg text-brand p-3 rounded-xl w-fit mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h4 class="font-heading font-bold text-neutral-900 text-lg mb-2">Transparent Flat-Rate Pricing</h4>
+          <p class="text-neutral-600 text-sm leading-relaxed">
+            No hidden fees, no renewal surprises, no upfront costs. You only pay when we perform.
+          </p>
+        </div>
+
+        <!-- Local Expertise (wide) -->
+        <div class="bento-card spotlight-card relative overflow-hidden bg-brand-bg border border-brand/10 rounded-2xl p-6 sm:col-span-2 lg:col-span-2 flex items-center reveal-item">
+          <div class="flex items-start gap-4">
+            <div class="bg-white text-brand p-3 rounded-xl w-fit shrink-0 shadow-sm">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-heading font-bold text-neutral-900 text-lg mb-2">Deep Local Expertise</h4>
+              <p class="text-neutral-600 text-sm leading-relaxed">
+                We live and work in San Antonio. We know the regulations, the neighborhoods, and exactly what your property should rent for across Bexar, Comal, and Guadalupe counties.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Card (full-width closing banner) -->
+        <div class="bento-card relative overflow-hidden rounded-2xl p-8 sm:col-span-2 lg:col-span-4 reveal-item flex flex-col sm:flex-row items-center justify-between gap-5 bg-neutral-950 text-white">
+          <div class="absolute -right-16 -bottom-16 w-56 h-56 rounded-full" style="background: radial-gradient(circle, rgba(166,34,34,0.35), transparent 70%);"></div>
+          <div class="relative text-center sm:text-left">
+            <h4 class="font-heading font-bold text-xl sm:text-2xl">See what your property should earn.</h4>
+            <p class="text-neutral-400 text-sm mt-1.5">Free, no-obligation rental analysis — most owners are leaving money on the table.</p>
+          </div>
+          <a href="#contact-form" class="btn-shine relative shrink-0 inline-flex items-center justify-center px-8 py-3.5 bg-brand text-white font-bold rounded-lg text-sm hover:bg-brand-light transition-colors">
+            Get My Free Analysis
+          </a>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- Wave Divider: Why Choose Us (white) to Testimonials (light gray) -->
-  <div class="relative w-full overflow-hidden leading-none z-10 -mt-1 bg-white">
-    <svg viewBox="0 0 1200 120" class="w-full h-12 text-neutral-50 fill-current" preserveAspectRatio="none">
-      <path d="M0,50 C200,10 400,90 600,50 C800,10 1000,90 1200,50 L1200,120 L0,120 Z"></path>
-    </svg>
-  </div>
+  <!-- BOLD CTA BAND (reusing the original "Ready to Stop" section background) -->
+  <section class="relative py-20 overflow-hidden bg-gradient-shift">
+    <!-- Decorative ring circles -->
+    <div class="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full border-2 border-white/10 z-0"></div>
+    <div class="absolute -top-16 -right-16 w-[350px] h-[350px] rounded-full border border-white/10 z-0"></div>
+    <div class="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full border-2 border-white/10 z-0"></div>
+    <div class="absolute -bottom-16 -left-16 w-[350px] h-[350px] rounded-full border border-white/10 z-0"></div>
+    <!-- Radial glow center -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.07),transparent_70%)] z-0"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white reveal">
+      <h2 class="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight leading-tight mb-4">
+        Your Property. Our Expertise.<br class="hidden sm:block"> <span class="text-red-200">Your Passive Income.</span>
+      </h2>
+      <p class="text-red-100/80 text-base sm:text-lg max-w-2xl mx-auto mb-10">
+        Join San Antonio landlords who've traded the midnight calls and spreadsheets for hands-free rental income.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#contact-form" class="btn-shine inline-flex items-center justify-center px-10 py-4 bg-white text-brand font-bold rounded-xl text-base hover:bg-neutral-100 hover:shadow-xl transition-all">
+          Get Free Rental Analysis
+        </a>
+        <a href="tel:+12106951100" class="btn-shine inline-flex items-center justify-center px-8 py-4 border-2 border-white/40 text-white font-bold rounded-xl text-base hover:bg-white/10 transition-all">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          Call (210) 695-1100
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- 8. TESTIMONIALS SECTION -->
   <section id="reviews" class="py-24 bg-neutral-50 scroll-mt-20">
@@ -1001,9 +1173,57 @@
         </p>
       </div>
 
+      <!-- Infinite Review Marquee -->
+      <div class="marquee-track marquee-mask overflow-hidden mb-12">
+        <div class="marquee gap-4 py-2">
+          <!-- Set A -->
+          <div class="marquee-review shrink-0 bg-white border border-gray-100 rounded-xl p-5 shadow-sm">
+            <div class="flex text-yellow-400 mb-2"><span class="text-sm">★★★★★</span></div>
+            <p class="text-neutral-700 text-sm leading-relaxed">"Placed a qualified tenant in under two weeks. Zero headaches since."</p>
+            <p class="text-xs text-brand font-semibold mt-3">Maria G. — Stone Oak</p>
+          </div>
+          <div class="marquee-review shrink-0 bg-white border border-gray-100 rounded-xl p-5 shadow-sm">
+            <div class="flex text-yellow-400 mb-2"><span class="text-sm">★★★★★</span></div>
+            <p class="text-neutral-700 text-sm leading-relaxed">"I'm out of state — they handle everything. I just read the monthly statement."</p>
+            <p class="text-xs text-brand font-semibold mt-3">James C. — Boerne</p>
+          </div>
+          <div class="marquee-review shrink-0 bg-white border border-gray-100 rounded-xl p-5 shadow-sm">
+            <div class="flex text-yellow-400 mb-2"><span class="text-sm">★★★★★</span></div>
+            <p class="text-neutral-700 text-sm leading-relaxed">"Transparent pricing, no games, and they actually pick up the phone."</p>
+            <p class="text-xs text-brand font-semibold mt-3">Patricia R. — Alamo Heights</p>
+          </div>
+          <div class="marquee-review shrink-0 bg-white border border-gray-100 rounded-xl p-5 shadow-sm">
+            <div class="flex text-yellow-400 mb-2"><span class="text-sm">★★★★★</span></div>
+            <p class="text-neutral-700 text-sm leading-relaxed">"Vacancy dropped, rent went up. Best decision I made as a landlord."</p>
+            <p class="text-xs text-brand font-semibold mt-3">David K. — Schertz</p>
+          </div>
+          <!-- Set B (duplicate for seamless loop) -->
+          <div class="marquee-review shrink-0 bg-white border border-gray-100 rounded-xl p-5 shadow-sm" aria-hidden="true">
+            <div class="flex text-yellow-400 mb-2"><span class="text-sm">★★★★★</span></div>
+            <p class="text-neutral-700 text-sm leading-relaxed">"Placed a qualified tenant in under two weeks. Zero headaches since."</p>
+            <p class="text-xs text-brand font-semibold mt-3">Maria G. — Stone Oak</p>
+          </div>
+          <div class="marquee-review shrink-0 bg-white border border-gray-100 rounded-xl p-5 shadow-sm" aria-hidden="true">
+            <div class="flex text-yellow-400 mb-2"><span class="text-sm">★★★★★</span></div>
+            <p class="text-neutral-700 text-sm leading-relaxed">"I'm out of state — they handle everything. I just read the monthly statement."</p>
+            <p class="text-xs text-brand font-semibold mt-3">James C. — Boerne</p>
+          </div>
+          <div class="marquee-review shrink-0 bg-white border border-gray-100 rounded-xl p-5 shadow-sm" aria-hidden="true">
+            <div class="flex text-yellow-400 mb-2"><span class="text-sm">★★★★★</span></div>
+            <p class="text-neutral-700 text-sm leading-relaxed">"Transparent pricing, no games, and they actually pick up the phone."</p>
+            <p class="text-xs text-brand font-semibold mt-3">Patricia R. — Alamo Heights</p>
+          </div>
+          <div class="marquee-review shrink-0 bg-white border border-gray-100 rounded-xl p-5 shadow-sm" aria-hidden="true">
+            <div class="flex text-yellow-400 mb-2"><span class="text-sm">★★★★★</span></div>
+            <p class="text-neutral-700 text-sm leading-relaxed">"Vacancy dropped, rent went up. Best decision I made as a landlord."</p>
+            <p class="text-xs text-brand font-semibold mt-3">David K. — Schertz</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Testimonials Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal-container">
-        
+
         <!-- Review 1 -->
         <div class="testimonial-card bg-white border border-gray-100 rounded-xl p-8 shadow-sm flex flex-col justify-between reveal-item">
           <div>
@@ -1916,8 +2136,13 @@
 
       let popupSeen = sessionStorage.getItem('exit_popup_triggered') === 'true';
 
+      // Arm exit-intent only after the visitor has spent a few seconds on the page,
+      // so it never fires on an accidental early cursor movement.
+      let exitArmed = false;
+      setTimeout(() => { exitArmed = true; }, 5000);
+
       function showExitModal() {
-        if (popupSeen) return;
+        if (popupSeen || !exitArmed) return;
         popupSeen = true;
         sessionStorage.setItem('exit_popup_triggered', 'true');
         
@@ -2081,7 +2306,7 @@
     });
 
     // 12. Typewriter Animation (with slide-up/fade transitions)
-    const words = ["Late Rent", "Vacancies", "Tenant Calls", "Repairs", "Stress"];
+    const words = ["Late Rent", "Vacancies", "Repairs", "Stress"];
     let wordIdx = 0;
     let charIdx = 0;
     let isDeleting = false;
@@ -2122,6 +2347,15 @@
       if (typewriterEl) {
         type();
       }
+
+      // Spotlight hover: track cursor position for .spotlight-card
+      document.querySelectorAll('.spotlight-card').forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+          card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+        });
+      });
     });
   </script>
 </body>
